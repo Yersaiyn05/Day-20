@@ -11,8 +11,8 @@ export class TasksService {
         },
         {
             id: 2,
-            title: '',
-            description: '',
+            title: 'Task 2',
+            description: 'Description 2',
         },
     ];
 
@@ -46,4 +46,28 @@ export class TasksService {
         }
         return task;
     }
+    updatePut(id: number, dto: UpdateTaskDto) {
+    const task = this.findById(id);
+
+    if (dto.title !== undefined) {
+        task.title = dto.title;
+    }
+
+    if (dto.description !== undefined) {
+        task.description = dto.description;
+    }
+
+    return task;
+}
+
+    delete(id:number){
+        const Index = this.tasks.findIndex((task) => task.id === id);
+        if(Index === -1){
+            throw new NotFoundException('task not found');
+        }
+        const deleteTask = this.tasks[Index];
+        this.tasks.splice(Index, 1);
+        return deleteTask;
+    }
+
 }
